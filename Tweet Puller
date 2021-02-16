@@ -17,7 +17,7 @@ def create_url():
 
 
 def create_headers(bearer_token):
-	headers = {"Authorization": "Bearer {}".format(AAAAAAAAAAAAAAAAAAAAADY9MgEAAAAAkfsuM7wAHDLeL2fxdPY4BC%2BzEzY%3De8G9UHiykpLaowhIUFQk9q52viO23ZWDPXhUxpvDI9xLYXOI18)}
+	headers = {"Authorization": "Bearer {}".format("AAAAAAAAAAAAAAAAAAAAADY9MgEAAAAAkfsuM7wAHDLeL2fxdPY4BC%2BzEzY%3De8G9UHiykpLaowhIUFQk9q52viO23ZWDPXhUxpvDI9xLYXOI18")}
 	return headers
 
 
@@ -39,7 +39,7 @@ def connect_to_endpoint(url, headers):
 def main():
 	bearer_token = auth()
 	url = create_url()
-	headers = create_headers(AAAAAAAAAAAAAAAAAAAAADY9MgEAAAAAkfsuM7wAHDLeL2fxdPY4BC%2BzEzY%3De8G9UHiykpLaowhIUFQk9q52viO23ZWDPXhUxpvDI9xLYXOI18)
+	headers = create_headers("AAAAAAAAAAAAAAAAAAAAADY9MgEAAAAAkfsuM7wAHDLeL2fxdPY4BC%2BzEzY%3De8G9UHiykpLaowhIUFQk9q52viO23ZWDPXhUxpvDI9xLYXOI18")
 	timeout = 0
 	while True:
 		connect_to_endpoint(url, headers)
