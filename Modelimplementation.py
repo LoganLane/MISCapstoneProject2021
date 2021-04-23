@@ -48,7 +48,7 @@ df['Scrubbed_Tweet'] = df['Scrubbed_Tweet'].apply(lambda x : ' '.join(d[word] if
 
 #creating our corups to be vectorized
 corpus = []
-for i in range(0,9406):
+for i in range(0,6998):
     tweet = df['Scrubbed_Tweet'][i]
     tweet = tweet.lower()
     tweet = tweet.split()
@@ -87,17 +87,22 @@ sentence_vectors = np.asarray(sentence_vectors)
 # creating a new dataframe object that combines the newly vectorized data and a tpye column for our model to analyze
 pf = pd.DataFrame(sentence_vectors)
 pf['Type'] = df['Type']
+#splitting our dataframe into two dataframes the first for training oour data and the second for testing
+pf_1 = pf.iloc[:5000,:]
+pf_2 = pf.iloc[5000:,:]
+print(pf_1.shape)
+
 
 #creating a target variable for the ML model to use for predition of outcomes
-target = pf.pop('Type')
-dataset = tf.data.Dataset.from_tensor_slices((pf.values,target.values))
+target = pf_1.pop('Type')
+dataset = tf.data.Dataset.from_tensor_slices((pf_1.values,target.values))
 
-#formats features tensor and target variable so information is grouped propery and displays teh first 5 index points from data
+#formats features tensor and target variable so information is grouped properly and displays the first 5 index points from data
 for feat, targ in dataset.take(5):
     print ('Features: {}, target {}'.format(feat, targ))
 
 #creates a traindataset variable to be passed to the model as well as shuffeling the data to ensure no two runs are in the same order
-train_dataset = dataset.shuffle(len(pf)).batch(1)
+train_dataset = dataset.shuffle(len(pf_1)).batch(3)
 
 #Default model creation given by tensorflow
 def get_compiled_model():
@@ -114,11 +119,16 @@ def get_compiled_model():
 #Creating model using the default model creation function get_compiled_model
 model = get_compiled_model()
 #Printing the epochs of the model being trained on our dataset
-print(model.fit(train_dataset, epochs=15))
+print(model.fit(train_dataset, epochs=10))
 
 
+target = pf_2.pop('Type')
+dataset = tf.data.Dataset.from_tensor_slices((pf_2.values,target.values))
+
+for feat, targ in dataset.take(5):
+    'Features: {}, target {}'.format(feat, targ)
+
+test_dataset = dataset.shuffle(len(pf_1)).batch(3)
 
 
-
-
-
+print(model.fit(test_dataset, epochs=1))
