@@ -8,21 +8,15 @@ import pandas_profiling
 import pandas as pd
 import nltk
 import unidecode
-import re
-import numpy as np
-from numpy import asarray
-from numpy import savetxt
-
 
 from nltk.stem import WordNetLemmatizer
 from nltk.stem import PorterStemmer 
 from nltk.corpus import stopwords
-import heapq
 
 
 pd.set_option('display.max_columns', 4)
 #opens dataset and creates a data frame object
-df = pd.read_csv('nodupes.csv')
+df = pd.read_csv('AnnotatedData.csv')
 print(df.head(30))
 
 pandas_profiling.ProfileReport(df)
